@@ -1,0 +1,56 @@
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+    <li class="breadcrumb-item"><a routerLink="/categories">Lançamento</a></li>
+    <li class="breadcrumb-item active">{{pageTitle}}</li>
+  </ol>
+</nav>
+
+<div class="row mb-4" >
+  <div class="h2 border-left col-md pl-2">
+    <h1>{{pageTitle}}</h1>
+  </div>
+  <div class="col-md-3">
+    <a class="btn btn-success mt-2 float-right" routerLink="/entries"><< Voltar</a>
+  </div>
+</div>
+
+<form [FormGroup]="entryForm" (submit)="submitForm()" >
+
+  <div class="card">
+    <div class="card-header">
+      Irformações sobre Lançamentos
+    </div>
+
+    <div class="card-body">
+      <div class="form-row">
+
+        <div class="form-group col-md-4">
+          <label for="name">Nome</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+
+          <div class="text-danger" *ngIf="entryForm.get('name').invalid && entryForm.get('name').touched">
+            <div *ngIf="entryForm.get('name').errors.required">dado obrigatório</div>
+            <div *ngIf="entryForm.get('name').errors.minlength">deve ter no mínimo 2 caracteres</div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-8">
+          <label for="description">Descrição</label>
+          <input type="text" class="form-control" id="description" formControlName="description">
+        </div>
+      </div>
+    </div>
+
+   </div>
+
+   <div class="alert alert-danger mt-4" *ngIf="ServerErrorMenssages">
+     <strong>Erro no servidor!</strong>
+     <ul *ngFor="let error of ServerErrorMenssages">
+       <li>{{error}}</li>
+     </ul>
+   </div>
+
+  <button [disabled]="submitingForm || entryForm.invalid" type="submit" class="btn btn-primary mt-3 float-right" (click)="submitForm()">Salvar</button>
+  </form>
+
