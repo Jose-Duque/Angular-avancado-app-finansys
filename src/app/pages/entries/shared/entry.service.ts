@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { Observable, throwError } from "rxjs";
-import { map, catchError, flatMap } from "rxjs/operators";
+import { map, catchError, mergeMap } from "rxjs/operators";
 
 import { CategoryService } from "../../categories/shared/category.service";
 import { Entry } from "../shared/entry.model";
@@ -34,7 +34,7 @@ export class EntryService {
 
   create(entry: Entry): Observable<Entry> {
     return this.categoryService.getById(entry.categoryId).pipe(
-      flatMap(category => {
+      mergeMap(category => {
         entry.category = category
 
         return this.http.post(this.apiPath, entry).pipe(
@@ -49,7 +49,7 @@ export class EntryService {
   update(entry: Entry): Observable<Entry> {
     const url = `${this.apiPath}/${entry.id}`
     return this,this.categoryService.getById(entry.categoryId).pipe(
-      flatMap(category => {
+      mergeMap(category => {
         entry.category = category
 
         return this.http.put(url, entry).pipe(
