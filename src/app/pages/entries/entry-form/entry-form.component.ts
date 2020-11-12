@@ -64,6 +64,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     this.builtEntryForm();
     this.loadEntry();
     this.loadcategory();
+
   }
 
   ngAfterContentChecked(): void { //- Para Setar o título da pagina
